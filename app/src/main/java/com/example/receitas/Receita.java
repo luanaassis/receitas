@@ -1,6 +1,6 @@
 package com.example.receitas;
 
-public class Meals {
+public class Receita {
     public String strMeal;
     public String strInstructions;
     public String strMealThumb;
