@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         app.executor.execute(() -> {
             try {
                 Meals receita = app.getReceitasRepo().buscaReceita();
-                for(int i = 0; i< receita.meals.length;i++) {
                     nomeReceita.postValue(String.valueOf(receita.meals[0].strMeal));
                     urlImagem.postValue(String.valueOf(receita.meals[0].strMealThumb));
                     modoPreparo.postValue(String.valueOf(receita.meals[0].strInstructions));
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                             receita.meals[0].strIngredient18+" - "+receita.meals[0].strMeasure18 +" \n"+
                             receita.meals[0].strIngredient19+" - "+receita.meals[0].strMeasure19 +" \n"+
                             receita.meals[0].strIngredient20+" - "+receita.meals[0].strMeasure20));
-                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
