@@ -1,6 +1,7 @@
 package com.example.receitas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import android.os.Bundle;
@@ -16,10 +17,11 @@ public class MainActivity extends AppCompatActivity {
     private MutableLiveData<String> nomeReceita = new MutableLiveData<>();
     private MutableLiveData<String> modoPreparo = new MutableLiveData<>();
     private MutableLiveData<String> ingredientesMedidas = new MutableLiveData<>();
+
+    private MutableLiveData<String> urlImagem = new MutableLiveData<>();
     private TextView nome;
     private TextView preparo;
     private TextView ingredientes;
-
     private ImageView imagem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +35,14 @@ public class MainActivity extends AppCompatActivity {
         nomeReceita.observe(this,(v) -> nome.setText(v));
         modoPreparo.observe(this,(v) -> preparo.setText(v));
         ingredientesMedidas.observe(this, (v) -> ingredientes.setText(v));
+        getUrlImagem().observe(this,
+                (v) -> Picasso.get().load(v).into(imagem));
         app.executor.execute(() -> {
             try {
                 Meals receita = app.getReceitasRepo().buscaReceita();
                 for(int i = 0; i< receita.meals.length;i++) {
                     nomeReceita.postValue(String.valueOf(receita.meals[0].strMeal));
+                    urlImagem.postValue(String.valueOf(receita.meals[0].strMealThumb));
                     modoPreparo.postValue(String.valueOf(receita.meals[0].strInstructions));
                     ingredientesMedidas.postValue(String.valueOf(receita.meals[0].strIngredient1+" - "+receita.meals[0].strMeasure1 +" \n"+
                             receita.meals[0].strIngredient2+" - "+receita.meals[0].strMeasure2 +" \n"+
@@ -59,11 +64,13 @@ public class MainActivity extends AppCompatActivity {
                             receita.meals[0].strIngredient18+" - "+receita.meals[0].strMeasure18 +" \n"+
                             receita.meals[0].strIngredient19+" - "+receita.meals[0].strMeasure19 +" \n"+
                             receita.meals[0].strIngredient20+" - "+receita.meals[0].strMeasure20));
-                    Picasso.get().load(receita.meals[0].strMealThumb).into(imagem);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
+    }
+    public LiveData<String> getUrlImagem() {
+        return urlImagem;
     }
 }
