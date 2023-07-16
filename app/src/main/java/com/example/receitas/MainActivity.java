@@ -6,8 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView preparo;
     private TextView ingredientes;
     private ImageView imagem;
+    private Button click;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,15 @@ public class MainActivity extends AppCompatActivity {
                             receita.meals[0].strIngredient20+" - "+receita.meals[0].strMeasure20));
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+        });
+        click = findViewById(R.id.button);
+        click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
             }
         });
     }

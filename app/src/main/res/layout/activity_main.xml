@@ -50,8 +50,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="201dp"
-        android:layout_height="208dp"
+        android:layout_width="202dp"
+        android:layout_height="330dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
